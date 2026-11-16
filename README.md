@@ -1,0 +1,316 @@
+DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="MyStudyHub - Free educational notes for Classes 1 to 12 in Hindi and English.">
+<title>MyStudyHub - Free Study Notes</title>
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background: #f5faf5;
+  color: #183b29;
+  line-height: 1.6;
+}
+
+header {
+  background: white;
+  padding: 16px 7%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 10px #0000000c;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.logo {
+  color: #16834a;
+  font-size: 25px;
+  font-weight: bold;
+}
+
+nav a {
+  color: #294b36;
+  text-decoration: none;
+  margin-left: 20px;
+  font-weight: 600;
+}
+
+.hero {
+  text-align: center;
+  padding: 75px 20px;
+  background: linear-gradient(135deg, #e4f7e8, #f7fff8);
+}
+
+.hero h1 {
+  font-size: clamp(32px, 5vw, 48px);
+  color: #166534;
+  margin-bottom: 12px;
+}
+
+.hero p {
+  color: #55715c;
+  font-size: 18px;
+  margin-bottom: 25px;
+}
+
+.search {
+  max-width: 520px;
+  width: 100%;
+  padding: 15px;
+  border: 1px solid #cce5d1;
+  border-radius: 10px;
+  font-size: 16px;
+  outline-color: #16834a;
+}
+
+section {
+  padding: 50px 7%;
+}
+
+.section-title {
+  text-align: center;
+  margin-bottom: 25px;
+  color: #166534;
+  font-size: 28px;
+}
+
+.filters {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 28px;
+}
+
+select {
+  padding: 12px;
+  border: 1px solid #cce5d1;
+  border-radius: 8px;
+  background: white;
+  font-size: 15px;
+}
+
+.classes {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+}
+
+.class-card {
+  background: white;
+  border: 1px solid #e0eee2;
+  padding: 24px 12px;
+  text-align: center;
+  border-radius: 13px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.class-card:hover {
+  transform: translateY(-4px);
+  border-color: #16834a;
+  background: #effaf0;
+}
+
+.class-card h3 {
+  color: #16834a;
+  font-size: 22px;
+}
+
+.class-card p {
+  color: #718576;
+  font-size: 13px;
+}
+
+#notes {
+  background: white;
+  border-radius: 14px;
+  padding: 25px;
+  margin-top: 35px;
+  display: none;
+}
+
+.subjects {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.subject {
+  background: #eff8ef;
+  padding: 18px;
+  border-radius: 10px;
+  text-align: center;
+  font-weight: bold;
+}
+
+.info {
+  text-align: center;
+  background: #e9f6eb;
+}
+
+footer {
+  background: #14532d;
+  color: white;
+  text-align: center;
+  padding: 25px;
+}
+
+@media(max-width: 650px) {
+  header {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  nav a {
+    margin: 0 8px;
+    font-size: 14px;
+  }
+
+  .classes {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  section {
+    padding: 35px 5%;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">📚 MyStudyHub</div>
+  <nav>
+    <a href="#home">Home</a>
+    <a href="#classes">Classes</a>
+    <a href="#about">About</a>
+  </nav>
+</header>
+
+<div class="hero" id="home">
+  <h1>Learn Better. Grow Faster.</h1>
+  <p>Your free learning destination for Classes 1 to 12.</p>
+  <input
+    class="search"
+    id="search"
+    type="search"
+    placeholder="🔍 Search your class or subject..."
+    oninput="filterClasses()"
+  >
+</div>
+
+<section id="classes">
+  <h2 class="section-title">Explore Your Class</h2>
+
+  <div class="filters">
+    <select id="board">
+      <option value="All Boards">All Boards</option>
+      <option value="CBSE">CBSE</option>
+      <option value="ICSE">ICSE</option>
+      <option value="State Board">State Boards</option>
+    </select>
+
+    <select id="language">
+      <option value="English">English</option>
+      <option value="Hindi">हिन्दी</option>
+    </select>
+  </div>
+
+  <div class="classes" id="classList"></div>
+
+  <div id="notes">
+    <h2 id="selectedClass"></h2>
+    <p id="selectedInfo"></p>
+    <div class="subjects" id="subjectList"></div>
+  </div>
+</section>
+
+<section class="info" id="about">
+  <h2 class="section-title">Why MyStudyHub?</h2>
+  <p>✓ Free study resources</p>
+  <p>✓ Classes 1 to 12</p>
+  <p>✓ Hindi and English support</p>
+  <p>✓ Multiple education boards</p>
+  <p>✓ Easy-to-use learning platform</p>
+</section>
+
+<footer>
+  <h2>📚 MyStudyHub</h2>
+  <p>Learn • Practice • Succeed</p>
+  <p>© 2026 MyStudyHub. All rights reserved.</p>
+  <p>Educational resources for everyone.</p>
+</footer>
+
+<script>
+const classList = document.getElementById("classList");
+
+for (let i = 1; i <= 12; i++) {
+  const card = document.createElement("div");
+  card.className = "class-card";
+  card.dataset.search = "class " + i;
+  card.innerHTML = `
+    <h3>Class ${i}</h3>
+    <p>Explore Study Notes →</p>
+  `;
+  card.onclick = () => openClass(i);
+  classList.appendChild(card);
+}
+
+function filterClasses() {
+  const query = document.getElementById("search")
+    .value.toLowerCase();
+
+  document.querySelectorAll(".class-card").forEach(card => {
+    card.style.display =
+      card.dataset.search.includes(query) ? "" : "none";
+  });
+}
+
+function openClass(number) {
+  const board = document.getElementById("board").value;
+  const language = document.getElementById("language").value;
+
+  const subjects = number <= 5
+    ? ["Mathematics", "English", "Hindi", "Environmental Studies"]
+    : number <= 10
+    ? ["Mathematics", "Science", "Social Science", "English", "Hindi"]
+    : ["Physics", "Chemistry", "Mathematics", "Biology", "English"];
+
+  document.getElementById("notes").style.display = "block";
+  document.getElementById("selectedClass").textContent =
+    "Class " + number + " Study Materials";
+
+  document.getElementById("selectedInfo").textContent =
+    board + " • " + language;
+
+  const subjectList = document.getElementById("subjectList");
+  subjectList.innerHTML = "";
+
+  subjects.forEach(subject => {
+    const item = document.createElement("div");
+    item.className = "subject";
+    item.textContent = subject;
+    subjectList.appendChild(item);
+  });
+
+  document.getElementById("notes").scrollIntoView({
+    behavior: "smooth"
+  });
+}
+</script>
+
+</body>
+</html>
